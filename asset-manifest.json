@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/portfolio-dashboard/static/css/main.c12073b6.chunk.css",
-    "main.js": "/portfolio-dashboard/static/js/main.9e8bcb85.chunk.js",
-    "main.js.map": "/portfolio-dashboard/static/js/main.9e8bcb85.chunk.js.map",
-    "runtime-main.js": "/portfolio-dashboard/static/js/runtime-main.ca1747a5.js",
-    "runtime-main.js.map": "/portfolio-dashboard/static/js/runtime-main.ca1747a5.js.map",
-    "static/js/2.b9cbdf55.chunk.js": "/portfolio-dashboard/static/js/2.b9cbdf55.chunk.js",
-    "static/js/2.b9cbdf55.chunk.js.map": "/portfolio-dashboard/static/js/2.b9cbdf55.chunk.js.map",
-    "static/js/3.15170451.chunk.js": "/portfolio-dashboard/static/js/3.15170451.chunk.js",
-    "static/js/3.15170451.chunk.js.map": "/portfolio-dashboard/static/js/3.15170451.chunk.js.map",
-    "index.html": "/portfolio-dashboard/index.html",
-    "static/css/main.c12073b6.chunk.css.map": "/portfolio-dashboard/static/css/main.c12073b6.chunk.css.map",
-    "static/js/2.b9cbdf55.chunk.js.LICENSE.txt": "/portfolio-dashboard/static/js/2.b9cbdf55.chunk.js.LICENSE.txt",
-    "static/media/App.css": "/portfolio-dashboard/static/media/lato-v17-latin-regular.65e877e5.woff2"
+    "main.css": "/hyungmogu.com-dashboard/static/css/main.6052980b.chunk.css",
+    "main.js": "/hyungmogu.com-dashboard/static/js/main.9e8bcb85.chunk.js",
+    "main.js.map": "/hyungmogu.com-dashboard/static/js/main.9e8bcb85.chunk.js.map",
+    "runtime-main.js": "/hyungmogu.com-dashboard/static/js/runtime-main.acda8eda.js",
+    "runtime-main.js.map": "/hyungmogu.com-dashboard/static/js/runtime-main.acda8eda.js.map",
+    "static/js/2.ccf74def.chunk.js": "/hyungmogu.com-dashboard/static/js/2.ccf74def.chunk.js",
+    "static/js/2.ccf74def.chunk.js.map": "/hyungmogu.com-dashboard/static/js/2.ccf74def.chunk.js.map",
+    "static/js/3.15170451.chunk.js": "/hyungmogu.com-dashboard/static/js/3.15170451.chunk.js",
+    "static/js/3.15170451.chunk.js.map": "/hyungmogu.com-dashboard/static/js/3.15170451.chunk.js.map",
+    "index.html": "/hyungmogu.com-dashboard/index.html",
+    "static/css/main.6052980b.chunk.css.map": "/hyungmogu.com-dashboard/static/css/main.6052980b.chunk.css.map",
+    "static/js/2.ccf74def.chunk.js.LICENSE.txt": "/hyungmogu.com-dashboard/static/js/2.ccf74def.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/hyungmogu.com-dashboard/static/media/lato-v17-latin-regular.65e877e5.woff2"
   },
   "entrypoints": [
-    "static/js/runtime-main.ca1747a5.js",
-    "static/js/2.b9cbdf55.chunk.js",
-    "static/css/main.c12073b6.chunk.css",
+    "static/js/runtime-main.acda8eda.js",
+    "static/js/2.ccf74def.chunk.js",
+    "static/css/main.6052980b.chunk.css",
     "static/js/main.9e8bcb85.chunk.js"
   ]
 }
