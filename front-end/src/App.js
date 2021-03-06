@@ -28,9 +28,11 @@ function App() {
           <Switch>
             <Route path="/admin/info" component={InfoScreen}/>
             <Route path="/admin/projects/:id" component={ProjectDetailScreen}/>
+            <Route path="/admin/projects/new" component={ProjectDetailScreen}/>
             <Route path="/admin/projects" component={ProjectsScreen}/>
-            <Route path="/admin/work-experience/:id" component={WorkExperienceDetailScreen}/>
-            <Route path="/admin/work-experience" component={WorkExperiencesScreen}/>
+            <Route path="/admin/work-experiences/:id" component={WorkExperienceDetailScreen}/>
+            <Route path="/admin/work-experiences/new" component={WorkExperienceDetailScreen}/>
+            <Route path="/admin/work-experiences" component={WorkExperiencesScreen}/>
             <Route exact path="/admin" component={HomeScreen}/>
         </Switch>
         </AppStyle.Main>

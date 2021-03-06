@@ -1,0 +1,16 @@
+{
+  "name": "hyungmogu.com-server",
+  "version": "1.0.0",
+  "description": "server for hyungmogu.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "configure": "./bin/configuredb.sh"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.21.0",
+    "pg": "^8.5.1"
+  }
+}

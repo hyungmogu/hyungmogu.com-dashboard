@@ -48,7 +48,7 @@ function PrimaryNavMenu() {
                 <li><PrimaryNavMenuStyle.NavLinkNew exact to="/admin">Home</PrimaryNavMenuStyle.NavLinkNew></li>
                 <li><PrimaryNavMenuStyle.NavLinkNew to="/admin/info">Info</PrimaryNavMenuStyle.NavLinkNew></li>
                 <li><PrimaryNavMenuStyle.NavLinkNew to="/admin/projects">Projects</PrimaryNavMenuStyle.NavLinkNew></li>
-                <li><PrimaryNavMenuStyle.NavLinkNew to="/admin/work-experience">Work Experience</PrimaryNavMenuStyle.NavLinkNew></li>
+                <li><PrimaryNavMenuStyle.NavLinkNew to="/admin/work-experiences">Work Experience</PrimaryNavMenuStyle.NavLinkNew></li>
             </ul>
         </PrimaryNavMenuStyle.Nav>
     );

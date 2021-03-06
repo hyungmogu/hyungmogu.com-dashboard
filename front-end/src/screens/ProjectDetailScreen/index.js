@@ -4,13 +4,11 @@ import styled from 'styled-components';
 import constants from '../../constants';
 import Button from '../../components/Button';
 
-const sectionPadding = "1.31rem";
-
 const ProjectDetailScreenStyle = {
     Section: styled.section`
         border: 1px solid ${constants.colorGrey};
         border-radius: ${constants.borderRadius};
-        padding: ${sectionPadding};
+        padding: ${constants.sectionPadding};
     `,
     H2: styled.h2`
         color: ${constants.colorNavyBlue};
@@ -22,12 +20,16 @@ const ProjectDetailScreenStyle = {
         &:not(:last-child){
             margin: 0 0 1.41rem 0;
         }
+
+        button:not(:last-child) {
+            margin: 0 0.47rem 0 0;
+        }
     `
 };
 
 function ProjectDetailScreen() {
-    let [contactsList, setContactsList] = useState([{}]);
-    let [socialsList, setSocialsList] = useState([{}]);
+    let [highlightsList, setHighlightsList] = useState([""]);
+    let [imagesList, setImagesList] = useState([""]);
 
     return (
         <ProjectDetailScreenStyle.Section>
@@ -42,22 +44,24 @@ function ProjectDetailScreen() {
             </ProjectDetailScreenStyle.ButtonSection>
             <form>
                 <Form.FormGroup>
-                    <label>Name</label>
+                    <label>Title</label>
                     <Form.Input/>
                 </Form.FormGroup>
                 <Form.FormGroup>
-                    <label>Website</label>
+                    <label>Header Image</label>
                     <Form.Input/>
                 </Form.FormGroup>
                 <Form.FormGroup>
-                    <label>Contact</label>
-                    {contactsList.map((item, index) => <Form.KeyValueInput key={index} data={item}/>)}
-                    <Form.AddMoreButton onClick={_ => setContactsList(oldArray => [...oldArray, {}])}/>
+                    <label>Tools Used</label>
+                    <Form.Input/>
                 </Form.FormGroup>
                 <Form.FormGroup>
-                    <label>Socials</label>
-                    {socialsList.map(item => <Form.KeyValueInput data={item}/>)}
-                    <Form.AddMoreButton onClick={_ =>  setSocialsList(oldArray => [...oldArray, {}])}/>
+                    <label>Highlights</label>
+                    <Form.InputList list={highlightsList} onAdd={_ => setHighlightsList(oldArray => [...oldArray, ""])}/>
+                </Form.FormGroup>
+                <Form.FormGroup>
+                    <label>Images</label>
+                    <Form.InputList list={imagesList} onAdd={_ => setImagesList(oldArray => [...oldArray, ""])}/>
                 </Form.FormGroup>
             </form>
             <ProjectDetailScreenStyle.ButtonSection>

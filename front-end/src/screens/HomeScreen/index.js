@@ -2,13 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import constants from '../../constants';
 
-const containerPadding = "1.31rem";
 
 const HomeScreenStyle = {
     Section: styled.section`
         border: 1px solid ${constants.colorGrey};
         border-radius: ${constants.borderRadius};
-        padding: ${containerPadding};
+        padding: ${constants.sectionPadding};
         flex-grow: 1;
 
         display: flex;

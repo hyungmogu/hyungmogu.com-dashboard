@@ -1,6 +1,41 @@
 import styled from 'styled-components';
 import constants from '../../constants';
 
+
+const AddMoreButtonStyle = {
+    Button: styled.button`
+        color: ${constants.colorWhite};
+        border: none;
+        background-color: ${constants.colorPurple};
+        border-radius: 0.14rem;
+        padding: 0.16rem;
+        cursor: pointer;
+    `,
+    Div: styled.div`
+        width: 1.1rem;
+        height: 1.1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    `,
+    Section: styled.section`
+        display: flex;
+        justify-content: center;
+    `
+};
+
+function AddMoreButton(props) {
+    return(
+        <AddMoreButtonStyle.Section>
+            <AddMoreButtonStyle.Button onClick={props.onClick}>
+                <AddMoreButtonStyle.Div>
+                <strong>+</strong>
+                </AddMoreButtonStyle.Div>
+            </AddMoreButtonStyle.Button>
+        </AddMoreButtonStyle.Section>
+    );
+}
+
 const InputStyle = {
     Div: styled.div`
         display: flex;
@@ -13,6 +48,7 @@ const InputStyle = {
     `
 };
 
+
 function Input() {
     return(
         <InputStyle.Div>
@@ -21,6 +57,30 @@ function Input() {
     )
 };
 
+const InputListStyle = {
+    Div: styled(InputStyle.Div)`
+        margin: 0 0 0.23rem 0;
+    `,
+    ButtonSection: styled.section`
+        display: flex;
+        justify-content: center;
+    `
+};
+
+function InputList(props) {
+    return(
+        <>
+            {props.list.map((item, index) => (
+                <InputListStyle.Div key={index}>
+                    <InputStyle.Input defaultValue={item ? item : ""}/>
+                </InputListStyle.Div>
+            ))}
+            <InputListStyle.ButtonSection>
+                <AddMoreButton onClick={props.onAdd}/>
+            </InputListStyle.ButtonSection>
+        </>
+    );
+}
 
 const FormGroup = styled.div`
     margin: 0 0 0.6rem 0;
@@ -67,43 +127,38 @@ function KeyValueInput() {
     )
 };
 
-const AddMoreButtonStyle = {
-    Button: styled.button`
-        color: ${constants.colorWhite};
-        border: none;
-        background-color: ${constants.colorPurple};
-        border-radius: 0.14rem;
-        padding: 0.16rem;
-        cursor: pointer;
+
+const KeyValueInputListStyle = {
+    Div: styled(KeyValueInputStyle.Div)`
+        margin: 0 0 0.23rem 0;
     `,
-    Div: styled.div`
-        width: 1.1rem;
-        height: 1.1rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    `,
-    Section: styled.section`
+    ButtonSection: styled.section`
         display: flex;
         justify-content: center;
     `
 };
 
-function AddMoreButton(props) {
+function KeyValueInputList(props) {
     return(
-        <AddMoreButtonStyle.Section>
-            <AddMoreButtonStyle.Button onClick={props.onClick}>
-                <AddMoreButtonStyle.Div>
-                <strong>+</strong>
-                </AddMoreButtonStyle.Div>
-            </AddMoreButtonStyle.Button>
-        </AddMoreButtonStyle.Section>
+        <>
+            {props.list.map((item, index) => (
+                <KeyValueInputListStyle.Div key={index}>
+                    <KeyValueInputStyle.InputKey defaultValue={item[0] ? item[0] : ""}/><KeyValueInputStyle.InputValue defaultValue={item[1] ? item[1] : ""}/>
+                </KeyValueInputListStyle.Div>
+            ))}
+            <KeyValueInputListStyle.ButtonSection>
+                <AddMoreButton onClick={props.onAdd}/>
+            </KeyValueInputListStyle.ButtonSection>
+        </>
     );
 }
 
+
 export default {
     Input,
+    InputList,
     FormGroup,
     KeyValueInput,
+    KeyValueInputList,
     AddMoreButton,
 };

@@ -9,6 +9,8 @@ const ButtonStyle = {
         background-color: ${props => {
             if (props.primary) {
                 return constants.colorNavyBlue;
+            } else if (props.secondary) {
+                return constants.colorOrange;
             }
         }};
         color: ${constants.colorWhite};
