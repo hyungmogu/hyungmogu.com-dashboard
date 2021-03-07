@@ -17,27 +17,6 @@ CREATE TABLE work_experiences (
     FOREIGN KEY (userId) REFERENCES user_self(id)
 );
 
-DROP TABLE IF EXISTS highlights;
-CREATE TABLE highlights (
-    id          SERIAL PRIMARY KEY,
-    detail      VARCHAR(100),
-    workExpId   INT,
-    FOREIGN KEY (workExpId) REFERENCES work_experiences(id),
-    projectId   INT,
-    FOREIGN KEY (projectId) REFERENCES projects(id)
-);
-
-DROP TABLE IF EXISTS techUsed;
-CREATE TABLE techUsed (
-    id          SERIAL PRIMARY KEY,
-    name        VARCHAR(100),
-    workExpId   INT,
-    FOREIGN KEY (workExpId) REFERENCES work_experiences(id),
-    projectId   INT,
-    FOREIGN KEY (projectId) REFERENCES projects(id)
-);
-
-
 DROP TABLE IF EXISTS contacts;
 CREATE TABLE contacts (
     id          SERIAL PRIMARY KEY,
@@ -46,7 +25,6 @@ CREATE TABLE contacts (
     userId      INT,
     FOREIGN KEY (userId) REFERENCES user_self(id)
 );
-
 
 DROP TABLE IF EXISTS socials;
 CREATE TABLE socials (
@@ -57,18 +35,45 @@ CREATE TABLE socials (
     FOREIGN KEY (userId) REFERENCES user_self(id)
 );
 
-
 DROP TABLE IF EXISTS projects;
-CREATE TABLE project (
-    id          SERIAL PRIMARY KEY,
-    title       VARCHAR(100),
-    date        DATE,
-    shortDesc   VARCHAR(255),
-    demoURL     VARCHAR(255),
-    sourceURL   VARCHAR(255),
-    userId      INT,
+CREATE TABLE projects (
+    id                  SERIAL PRIMARY KEY,
+    title               VARCHAR(100),
+    date                DATE,
+    shortDescription    VARCHAR(255),
+    demoURL             VARCHAR(255),
+    sourceURL           VARCHAR(255),
+    userId              INT,
     FOREIGN KEY (userId) REFERENCES user_self(id)
-
 );
+
+DROP TABLE IF EXISTS highlights;
+CREATE TABLE highlights (
+    id          SERIAL PRIMARY KEY,
+    detail      VARCHAR(255),
+    workExpId   INT,
+    FOREIGN KEY (workExpId) REFERENCES work_experiences(id),
+    projectId   INT,
+    FOREIGN KEY (projectId) REFERENCES projects(id)
+);
+
+DROP TABLE IF EXISTS tech_used;
+CREATE TABLE tech_used (
+    id          SERIAL PRIMARY KEY,
+    name        VARCHAR(100),
+    workExpId   INT,
+    FOREIGN KEY (workExpId) REFERENCES work_experiences(id),
+    projectId   INT,
+    FOREIGN KEY (projectId) REFERENCES projects(id)
+);
+
+DROP TABLE IF EXISTS images;
+CREATE TABLE images (
+    id          SERIAL PRIMARY KEY,
+    url         VARCHAR(100),
+    projectId   INT,
+    FOREIGN KEY (projectId) REFERENCES projects(id)
+);
+
 
 INSERT INTO user_self(firstName, lastName, nickName) VALUES ('Hyungmo', 'Gu', 'Moe');

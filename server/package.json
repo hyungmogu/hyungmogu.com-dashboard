@@ -4,13 +4,24 @@
   "description": "server for hyungmogu.com",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "configure": "./bin/configuredb.sh"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-server": "^2.21.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
     "pg": "^8.5.1"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "supertest": "^6.1.3"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
 }
