@@ -34,12 +34,12 @@ infoRouter.put("/", async (req, res) => {
     try{
         const text_user = `
             UPDATE user_self
-            SET (first_name, last_name, nick_name) = ($1, $2, $3)
+            SET (first_name, last_name, nick_name, website) = ($1, $2, $3, $4)
             WHERE id = 1 RETURNING *
         `;
         const value_user = [
             req.body.first_name, req.body.last_name,
-            req.body.nick_name
+            req.body.nick_name, req.body.website
         ];
 
         const res_user = await promise_query(text_user, value_user);
@@ -114,5 +114,28 @@ infoRouter.put("/", async (req, res) => {
     }
 });
 
+infoRouter.delete("/contacts/:id", async (req, res) => {
+    const text_contact= "DELETE FROM contacts WHERE id = $1";
+    const value_contact = [req.params.id];
+    try {
+        await promise_query(text_contact, value_contact);
+        res.status(204).send();
+    } catch(e) {
+        console.log(e);
+        res.status(500).send(e);
+    }
+});
+
+infoRouter.delete("/socials/:id", async (req, res) => {
+    const text_social= "DELETE FROM socials WHERE id = $1";
+    const value_social = [req.params.id];
+    try {
+        await promise_query(text_social, value_social);
+        res.status(204).send();
+    } catch(e) {
+        console.log(e);
+        res.status(500).send(e);
+    }
+});
 
 module.exports = infoRouter;

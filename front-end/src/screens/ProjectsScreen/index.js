@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Button from '../../components/Button';
 import Pagination from '../../components/Pagination';
 import constants from '../../constants';
+import { Button } from '../../components/Button';
 import { TableStyle } from '../../components/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router';
 
+const strftime = (date_string) => {
+    const date = new Date(date_string);
+    let options = { year: 'numeric', month: 'long', day: 'numeric' };
+
+    return date.toLocaleString('en-US', options);
+}
 
 const ProjectsScreenStyle = {
     PageSection: styled.section`
@@ -32,22 +38,34 @@ const ProjectsScreenStyle = {
     `
 };
 
-const sampleData = [
-    {
-        "id": 1,
-        "title": "Chat Application",
-        "date": "February 26th, 2021",
-        "shortDescription": "A ReactJS and GraphQL based full-stack web chat application for the demonstrated learning in backend development",
-        "techUsed": ["ReactJS", "Styled Components", "ES6 JavaScript", "Prisma ORM", "Node.js", "Apollo GraphQL"]
-    },
-];
-
 function ProjectsScreen() {
     let history = useHistory();
+    const [projects, setProjects] = useState([]);
 
-    const deleteProject = () => {
-        console.log("This is temporary");
+    const deleteProject =  async (id) => {
+        fetch(`${constants.serverURL}/admin/projects/${id}`, {
+            method: "DELETE"
+        }).then(_ => {
+            const index = projects.findIndex(item => item.id === id);
+            projects.splice(index, 1);
+            setProjects([...projects]);
+        }).catch(error => {
+            console.error(error);
+        });
     }
+
+    const getProjects = () => {
+        fetch(`${constants.serverURL}/admin/projects`)
+        .then(response => response.json())
+        .then(data => setProjects(data))
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+
+    useEffect(() => {
+        getProjects();
+    }, []);
 
     return (
         <ProjectsScreenStyle.PageSection>
@@ -70,12 +88,12 @@ function ProjectsScreen() {
                 </thead>
                 <tbody>
                     {
-                        sampleData.map(item => (
+                        projects.map(item => (
                             <tr>
                                 <TableStyle.Td>{item.title}</TableStyle.Td>
-                                <TableStyle.Td>{item.date}</TableStyle.Td>
-                                <TableStyle.Td>{item.shortDescription}</TableStyle.Td>
-                                <TableStyle.Td>{item.techUsed.join(", ")}</TableStyle.Td>
+                                <TableStyle.Td>{strftime(item.date)}</TableStyle.Td>
+                                <TableStyle.Td>{item.short_description}</TableStyle.Td>
+                                <TableStyle.Td>{item.tech_used.map(item => item.name).join(", ")}</TableStyle.Td>
                                 <TableStyle.Td>
                                     <TableStyle.Button onClick={_ => history.push(`/admin/projects/${item.id}`)}>
                                         <div>
@@ -95,9 +113,9 @@ function ProjectsScreen() {
                     }
                 </tbody>
             </TableStyle.Table>
-            <ProjectsScreenStyle.PaginationSection>
+            {/* <ProjectsScreenStyle.PaginationSection>
                 <Pagination/>
-            </ProjectsScreenStyle.PaginationSection>
+            </ProjectsScreenStyle.PaginationSection> */}
         </ProjectsScreenStyle.PageSection>
     );
 }

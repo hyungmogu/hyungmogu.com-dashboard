@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import constants from '../../constants';
 
-
 const ButtonStyle = {
     Button: styled.button`
         border: transparent;
@@ -32,3 +31,7 @@ export default function Button(props) {
         </ButtonStyle.Button>
     );
 }
+
+export {
+    Button
+};

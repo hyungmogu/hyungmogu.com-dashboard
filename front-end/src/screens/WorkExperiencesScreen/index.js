@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Button from '../../components/Button';
 import Pagination from '../../components/Pagination';
 import { TableStyle } from '../../components/Table';
 import constants from '../../constants';
+import { Button } from '../../components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router';
+
+
+const strftime = (date_string) => {
+    const date = new Date(date_string);
+    let options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleString('en-US', options);
+}
 
 const WorkExperiencesScreenStyle = {
     PageSection: styled.section`
@@ -31,22 +38,34 @@ const WorkExperiencesScreenStyle = {
     `
 };
 
-const sampleData = [
-    {
-        "id": 1,
-        "company": "SiteMax Systems Inc.",
-        "location": "Vancouver, BC, Canada",
-        "position": "Junior Developer",
-        "dateStart": "January 2018",
-        "dateEnd": "December 2019"
-    }
-];
-
 function WorkExperiencesScreen() {
-    const history = useHistory();
-    const deleteWorkExperience = () => {
-        console.log("This is temporary");
+    let history = useHistory();
+    const [workExperiences, setWorkExperiences] = useState([]);
+
+    const deleteWorkExperience =  async (id) => {
+        fetch(`${constants.serverURL}/admin/work-experiences/${id}`, {
+            method: "DELETE"
+        }).then(_ => {
+            const index = workExperiences.findIndex(item => item.id === id);
+            workExperiences.splice(index, 1);
+            setWorkExperiences([...workExperiences]);
+        }).catch(error => {
+            console.error(error);
+        });
     }
+
+    const getWorkExperiences = () => {
+        fetch(`${constants.serverURL}/admin/work-experiences`)
+        .then(response => response.json())
+        .then(data => setWorkExperiences(data))
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+
+    useEffect(() => {
+        getWorkExperiences();
+    }, []);
 
     return (
         <WorkExperiencesScreenStyle.PageSection>
@@ -69,11 +88,11 @@ function WorkExperiencesScreen() {
                     </tr>
                 </thead>
                 <tbody>
-                    {sampleData.map(item => (
-                        <tr>
+                    {workExperiences.map(item => (
+                        <tr key={item.id}>
                             <TableStyle.Td>{item.company}</TableStyle.Td>
-                            <TableStyle.Td>{item.dateStart}</TableStyle.Td>
-                            <TableStyle.Td>{item.dateEnd}</TableStyle.Td>
+                            <TableStyle.Td>{strftime(item.date_start)}</TableStyle.Td>
+                            <TableStyle.Td>{strftime(item.date_end)}</TableStyle.Td>
                             <TableStyle.Td>{item.position}</TableStyle.Td>
                             <TableStyle.Td>{item.location}</TableStyle.Td>
                             <TableStyle.Td>
@@ -94,9 +113,9 @@ function WorkExperiencesScreen() {
                     ))}
                 </tbody>
             </TableStyle.Table>
-            <WorkExperiencesScreenStyle.PaginationSection>
+            {/* <WorkExperiencesScreenStyle.PaginationSection>
                 <Pagination/>
-            </WorkExperiencesScreenStyle.PaginationSection>
+            </WorkExperiencesScreenStyle.PaginationSection> */}
         </WorkExperiencesScreenStyle.PageSection>
     );
 }

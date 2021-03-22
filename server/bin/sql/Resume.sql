@@ -3,18 +3,8 @@ CREATE TABLE user_self (
     id           SERIAL PRIMARY KEY,
     first_name   VARCHAR(255),
     last_name    VARCHAR(255),
-    nick_name    VARCHAR(255)
-);
-
-DROP TABLE IF EXISTS work_experiences;
-CREATE TABLE work_experiences (
-    id           SERIAL PRIMARY KEY,
-    company      VARCHAR(100),
-    date_start   DATE,
-    date_end     DATE,
-    location     VARCHAR(255),
-    user_id      INT,
-    FOREIGN KEY (user_id) REFERENCES user_self(id)
+    nick_name    VARCHAR(255),
+    website      VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS contacts;
@@ -35,12 +25,25 @@ CREATE TABLE socials (
     FOREIGN KEY (user_id) REFERENCES user_self(id)
 );
 
+DROP TABLE IF EXISTS work_experiences;
+CREATE TABLE work_experiences (
+    id           SERIAL PRIMARY KEY,
+    company      VARCHAR(100),
+    date_start   DATE,
+    date_end     DATE,
+    location     VARCHAR(255),
+    position     VARCHAR(255),
+    user_id      INT,
+    FOREIGN KEY (user_id) REFERENCES user_self(id)
+);
+
 DROP TABLE IF EXISTS projects;
 CREATE TABLE projects (
     id                  SERIAL PRIMARY KEY,
     title               VARCHAR(100),
     date                DATE,
     short_description   VARCHAR(255),
+    header_image_url    VARCHAR(255),
     demo_url            VARCHAR(255),
     source_url          VARCHAR(255),
     user_id              INT,
@@ -76,4 +79,4 @@ CREATE TABLE images (
 );
 
 
-INSERT INTO user_self(first_name, last_name, nick_name) VALUES ('Hyungmo', 'Gu', 'Moe');
+INSERT INTO user_self(first_name, last_name, nick_name, website) VALUES ('Hyungmo', 'Gu', 'Moe', 'http://www.hyungmogu.com');

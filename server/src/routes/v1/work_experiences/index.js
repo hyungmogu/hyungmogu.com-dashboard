@@ -37,14 +37,14 @@ workExperiencesRouter.post("/", async (req, res) => {
     try {
 
         const text_work_experience = `
-            INSERT INTO work_experiences(company, date_start, date_end, location, user_id)
-            VALUES($1, $2, $3, $4, $5)
+            INSERT INTO work_experiences(company, date_start, date_end, location, position, user_id)
+            VALUES($1, $2, $3, $4, $5, $6)
             RETURNING *
         `;
         const value_work_experience = [
             req.body.company, req.body.date_start,
             req.body.date_end, req.body.location,
-            1
+            req.body.position, 1
         ];
         const res_work_experience = await promise_query(text_work_experience, value_work_experience);
         work_experience = res_work_experience.rows[0];
@@ -58,7 +58,7 @@ workExperiencesRouter.post("/", async (req, res) => {
 
             let value_highlights = [];
             for (let item of req.body.highlights) {
-                value_highlights.push(item);
+                value_highlights.push(item.detail);
                 value_highlights.push(work_experience.id);
             };
             const res_highlights = await promise_query(text_highlights, value_highlights);
@@ -73,7 +73,7 @@ workExperiencesRouter.post("/", async (req, res) => {
             `;
             let value_tech_used = [];
             for (let item of req.body.tech_used) {
-                value_tech_used.push(item);
+                value_tech_used.push(item.name);
                 value_tech_used.push(work_experience.id);
             };
             const res_tech_used = await promise_query(text_tech_used, value_tech_used);
@@ -92,6 +92,35 @@ workExperiencesRouter.post("/", async (req, res) => {
     }
 });
 
+
+workExperiencesRouter.get("/:id", async (req, res) => {
+    const text = "SELECT * FROM work_experiences WHERE id = $1";
+    const value = [req.params.id];
+
+    try {
+        const res_work_exp = await promise_query(text, value);
+        let work_exp = res_work_exp.rows[0];
+
+        const text_highlights = "SELECT id, detail FROM highlights WHERE work_exp_id = $1";
+        const value_highlights = [work_exp.id];
+
+        const text_tech_used = "SELECT id, name FROM tech_used WHERE work_exp_id = $1";
+        const value_tech_used = [work_exp.id];
+
+        const res_highlights = await promise_query(text_highlights, value_highlights);
+        const highlights = res_highlights.rows;
+        const res_tech_used = await promise_query(text_tech_used, value_tech_used);
+        const tech_used = res_tech_used.rows;
+
+        work_exp["highlights"] = highlights;
+        work_exp["tech_used"] = tech_used;
+
+        res.send(work_exp);
+    } catch(e) {
+        console.log(e);
+        res.status(500).send(e);
+    }
+});
 
 workExperiencesRouter.put("/:id", async (req, res) => {
     let new_highlights = [];
@@ -193,5 +222,30 @@ workExperiencesRouter.delete("/:id", async (req, res) => {
         res.status(500).send(e);
     }
 });
+
+workExperiencesRouter.delete("/highlights/:id", async (req, res) => {
+    const text_highlight = "DELETE FROM highlights WHERE id = $1";
+    const value_highlight = [req.params.id];
+    try{
+        await promise_query(text_highlight, value_highlight);
+        res.status(204).send();
+    } catch(e) {
+        console.log(e);
+        res.status(500).send(e);
+    }
+});
+
+workExperiencesRouter.delete("/techs-used/:id", async (req, res) => {
+    const text_tech_used = "DELETE FROM tech_used WHERE id = $1";
+    const value_tech_used = [req.params.id];
+    try{
+        await promise_query(text_tech_used, value_tech_used);
+        res.status(204).send();
+    } catch(e) {
+        console.log(e);
+        res.status(500).send(e);
+    }
+});
+
 
 module.exports = workExperiencesRouter;

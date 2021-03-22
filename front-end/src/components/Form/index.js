@@ -1,6 +1,30 @@
 import styled from 'styled-components';
 import constants from '../../constants';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
+
+const IconButtonStyle = {
+    Button : styled.button`
+        background-color: transparent;
+        border: none;
+        padding: 0.5rem;
+        cursor: pointer;
+
+        div {
+            width: 1.1rem;
+            height: 1.1rem;
+        }
+    `
+};
+
+function IconButton(props) {
+    return (
+        <IconButtonStyle.Button onClick={props.onClick}>
+            {props.children}
+        </IconButtonStyle.Button>
+    )
+}
 
 const AddMoreButtonStyle = {
     Button: styled.button`
@@ -36,6 +60,32 @@ function AddMoreButton(props) {
     );
 }
 
+const DateInputStyle = {
+    Div: styled.div`
+        display: flex;
+    `,
+    Input: styled.input`
+        border: 1px solid ${constants.colorGrey};
+        background-color: ${constants.colorLightGrey};
+        padding: 0.56rem;
+        flex-grow: 1;
+    `
+};
+
+
+function DateInput(props) {
+    return(
+        <DateInputStyle.Div>
+            <DateInputStyle.Input
+                defaultValue={props.defaultValue}
+                onChange={props.onChange}
+                type="date"
+            />
+        </DateInputStyle.Div>
+    )
+};
+
+
 const InputStyle = {
     Div: styled.div`
         display: flex;
@@ -49,10 +99,13 @@ const InputStyle = {
 };
 
 
-function Input() {
+function Input(props) {
     return(
         <InputStyle.Div>
-            <InputStyle.Input/>
+            <InputStyle.Input
+                defaultValue={props.defaultValue}
+                onChange={props.onChange}
+            />
         </InputStyle.Div>
     )
 };
@@ -71,8 +124,16 @@ function InputList(props) {
     return(
         <>
             {props.list.map((item, index) => (
-                <InputListStyle.Div key={index}>
-                    <InputStyle.Input defaultValue={item ? item : ""}/>
+                <InputListStyle.Div key={item.id}>
+                    <InputStyle.Input
+                        defaultValue={item[props.objectKey] ? item[props.objectKey] : ""}
+                        onChange={e => props.onChange(e, index)}
+                    />
+                    <IconButton onClick={e => props.onDelete(e, index)}>
+                        <div>
+                            <FontAwesomeIcon icon={faTrashAlt}/>
+                        </div>
+                    </IconButton>
                 </InputListStyle.Div>
             ))}
             <InputListStyle.ButtonSection>
@@ -119,10 +180,17 @@ const KeyValueInputStyle = {
     `
 };
 
-function KeyValueInput() {
+function KeyValueInput(props) {
     return(
         <KeyValueInputStyle.Div>
-            <KeyValueInputStyle.InputKey/><KeyValueInputStyle.InputValue/>
+            <KeyValueInputStyle.InputKey
+                defaultValue={props.name ? props.name : ""}
+                onChange={e => props.onChange(e, null)}
+            />
+            <KeyValueInputStyle.InputValue
+                defaultValue={props.value ? props.value : ""}
+                onChange={e => props.onChange(null, e)}
+            />
         </KeyValueInputStyle.Div>
     )
 };
@@ -142,8 +210,20 @@ function KeyValueInputList(props) {
     return(
         <>
             {props.list.map((item, index) => (
-                <KeyValueInputListStyle.Div key={index}>
-                    <KeyValueInputStyle.InputKey defaultValue={item[0] ? item[0] : ""}/><KeyValueInputStyle.InputValue defaultValue={item[1] ? item[1] : ""}/>
+                <KeyValueInputListStyle.Div key={item.id}>
+                    <KeyValueInputStyle.InputKey
+                        defaultValue={item && item.name ? item.name : ""}
+                        onChange={e => props.onChange(e, null, index)}
+                    />
+                    <KeyValueInputStyle.InputValue
+                        defaultValue={item && item.value ? item.value : ""}
+                        onChange={e => props.onChange(null, e, index)}
+                    />
+                    <IconButton onClick={e => props.onDelete(e, index)}>
+                        <div>
+                            <FontAwesomeIcon icon={faTrashAlt}/>
+                        </div>
+                    </IconButton>
                 </KeyValueInputListStyle.Div>
             ))}
             <KeyValueInputListStyle.ButtonSection>
@@ -155,6 +235,7 @@ function KeyValueInputList(props) {
 
 
 export default {
+    DateInput,
     Input,
     InputList,
     FormGroup,
